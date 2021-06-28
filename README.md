@@ -2,8 +2,6 @@
 
 SOLID Principles: Explanation and examples
 
-# 2021/06/27
-
 ## Single Responsibility Principle
 
 *A class should have one and only one reason to change.*
