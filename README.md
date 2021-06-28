@@ -209,7 +209,7 @@ interface TwoDimensionalShape {
     int calculateArea();
 }
 
-interface ThreeDimensionalShape {
+interface ThreeDimensionalShape extends TwoDimensionalShape {
     int calculateVolume();
 }
 
@@ -228,7 +228,7 @@ class Square implements TwoDimensionalShape {
     }
 }
 
-class Cube implements TwoDimensionalShape, ThreeDimensionalShape {
+class Cube implements ThreeDimensionalShape {
     int side;
 
     public Cube(int side) {
