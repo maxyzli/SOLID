@@ -2,6 +2,8 @@
 
 SOLID Principles: Explanation and examples
 
+# 2021/06/27
+
 ## Single Responsibility Principle
 
 *A class should have one and only one reason to change.*
@@ -14,7 +16,7 @@ class Employee {
     int name;
     public void calculateSalary() {} // Finance Team
     public void hireEmployee() {} // HR
-     public void evaluateEmployee() {} // Manager
+    public void evaluateEmployee() {} // Manager
 }
 ```
 
@@ -48,7 +50,7 @@ class EvaluateEmployee {
 
 ## Open-Closed Principle
 
-*A class should be open for extension and closed for modification. *
+*A class should be open for extension and closed for modification.*
 
 Bad
 
@@ -56,6 +58,8 @@ Bad
 class AnimalFeeder {
     public void feedDog() {}
     public void feedCat() {}
+    public void feedBird() {}
+    // ...
 }
 ```
 
@@ -88,16 +92,70 @@ class Cat implements Animal {
 Bad
 
 ```java
+interface Cat {
+    void drink();
+    void makeSound();
+}
+
+class PetCat implements Cat {
+    @Override
+    public void drink() {
+        System.out.println("drinking mike");
+    }
+
+    @Override
+    public void makeSound() {
+        System.out.println("meow");
+    }
+}
+
+class ToyCat implements Cat {
+    @Override
+    public void drink() {
+        throw new RuntimeException("cannot drink milk");
+    }
+
+    @Override
+    public void makeSound() {
+        System.out.println("meow");
+    }
+}
 ```
 
 Good
 
 ```java
+interface MechanicalCat {
+    void makeSound();
+}
+
+interface LivingCat extends MechanicalCat {
+    void drink();
+}
+
+class PetCat implements LivingCat {
+    @Override
+    public void drink() {
+        System.out.println("drinking mike");
+    }
+
+    @Override
+    public void makeSound() {
+        System.out.println("meow");
+    }
+}
+
+class ToyCat implements MechanicalCat {
+    @Override
+    public void makeSound() {
+        System.out.println("meow");
+    }
+}
 ```
 
 ## Interface Segregation Principle
 
-*The clients shouldn’t be forced to implement the methods that they do not use.*
+*The clients shouldn't be forced to implement the methods that they do not use.*
 
 Bad
 
@@ -149,12 +207,53 @@ class Cube implements Shape {
 Good
 
 ```java
+interface TwoDimensionalShape {
+    int calculateArea();
+}
 
+interface ThreeDimensionalShape {
+    int calculateVolume();
+}
+
+class Square implements TwoDimensionalShape {
+    int width;
+    int height;
+
+    public Square(int width, int height) {
+        this.width = width;
+        this.height = height;
+    }
+
+    @Override
+    public int calculateArea() {
+        return width * height;
+    }
+}
+
+class Cube implements TwoDimensionalShape, ThreeDimensionalShape {
+    int side;
+
+    public Cube(int side) {
+        this.side = side;
+    }
+
+    @Override
+    public int calculateArea() {
+        return side * side;
+    }
+
+    @Override
+    public int calculateVolume() {
+        return side * side * side;
+    }
+}
 ```
 
 ## Dependency Inversion Principle
 
-*One should depend upon abstractions, not on the concrete implementation.*
+*High-level modules should not depend on low-level modules. Both should depend on abstractions.*
+
+![image](https://user-images.githubusercontent.com/11765228/123595239-42bbf000-d823-11eb-9427-17dc12a3edb3.png)
 
 Bad
 
