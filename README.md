@@ -85,7 +85,7 @@ class Cat implements Animal {
 
 ## Liskov Substitution principle
 
-*Substitute a superclass object reference with a subclasses, the program should not break.*
+*Objects of a superclass shall be replaceable with objects of its subclasses without breaking the application.*
 
 Bad
 
